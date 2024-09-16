@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="name">
+            <span id="user" style="color: rgb(31, 172, 31);">Player</span>
+            <span style="color: rgb(205, 11, 11);">Computer</span>
+        </div>
+
+        <div class="disp">
+            <div class="human">🤜</div>
+            <div class="text">
+                <span id="comment">V/S</span>
+                <span id="score">0 - 0</span>
+            </div>
+            <div class="comp">🤛</div>
+        </div>
+
+        <div class="options">
+            <span id="rock">👊</span>
+            <span id="paper">✋</span>
+            <span id="scissor">🖖</span>
+        </div>
+        <button id="btn"><img src="re.svg" alt="retry"></button>
+    </div>
+
+
+
+    <script>
+        let user_name = prompt("Enter Player Name")
+        console.log(user_name)
+        if (!user_name || user_name.trim() === "") {
+            user_name = 'Player'
+            document.querySelector("#user").innerHTML = user_name;
+        } else {
+            document.querySelector("#user").innerHTML = user_name;
+        }
+        let human = document.querySelector('.human')
+        let comp = document.querySelector('.comp')
+        let score = document.querySelector('#score')
+        let scoreUser = 0;
+        let scoreComp = 0;
+        function game() {
+            document.querySelector('#btn').hidden = true
+            let comment = document.querySelector('#comment')
+            let ran = Math.floor(Math.random() * 3)
+            let options = ['👊', '✋', '🖖']
+            let res;
+            function commentary() {
+                let a = human.innerHTML
+                let b = comp.innerHTML
+                console.log(a, b)
+                if (a == b) {
+                    res = "Draw"
+                }
+                else if (a == '👊' && b == '🖖') {
+                    res = `${user_name} Won`
+                }
+                else if (a == '✋' && b == '👊') {
+                    res = `${user_name} Won`
+                }
+                else if (a == '🖖' && b == '✋') {
+                    res = `${user_name} Won`
+                }
+                else {
+                    res = "Computer Won"
+                }
+                comment.innerHTML = res
+            }
+
+            function Score() {
+                if (res == `${user_name} Won`) {
+                    scoreUser++
+                }
+                else if (res == "Computer Won") {
+                    scoreComp++
+                }
+
+                score.textContent = `${scoreUser} - ${scoreComp}`
+
+            }
+
+            function handleEvent(symbol) {
+                human.textContent = symbol
+                comp.textContent = options[ran]
+
+
+                rock.removeEventListener('click', handleRock)
+                paper.removeEventListener('click', handlePaper)
+                scissor.removeEventListener('click', handleScissor)
+            }
+
+            function handleRock() {
+                handleEvent('👊')
+                commentary()
+                Score()
+                document.querySelector('#btn').hidden = false
+            }
+            function handlePaper() {
+                handleEvent('✋')
+                commentary()
+                Score()
+                document.querySelector('#btn').hidden = false
+            }
+            function handleScissor() {
+                handleEvent('🖖')
+                commentary()
+                Score()
+                document.querySelector('#btn').hidden = false
+            }
+            rock.addEventListener('click', handleRock)
+            paper.addEventListener('click', handlePaper)
+            scissor.addEventListener('click', handleScissor)
+
+        }
+
+
+        btn.addEventListener('click', () => {
+            human.innerHTML = '🤜'
+            comp.innerHTML = '🤛'
+            comment.innerHTML = 'V/S'
+            game()
+        })
+
+        game()
+
+
+
+    </script>
+</body>
+
+</html>
